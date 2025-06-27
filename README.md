@@ -80,7 +80,7 @@ Below are the four possible basic operations for this satellite network:
 ### Printing
 
 Displays the satellites in the binary tree level by level, starting from the root and using breadth-first traversal. 
-Each level will be printed on one line. For every satellite, prints the two identifiers in this format: `<frequency>-<name>`.
+For every satellite, prints the two identifiers in this format: `<frequency>-<name>`. Each level will be printed on one line.
 This operation does not require extra information about the network.
 
 ### Message Source Identification
