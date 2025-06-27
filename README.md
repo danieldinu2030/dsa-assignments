@@ -5,15 +5,15 @@
 - [Overview](#overview)
 - [Network Base Input and Output](#network-base-input-and-output)
 - [Base Tasks](#base-tasks)
+- [Complex Task](#complex-task)
+- [Running the Program](#running-the-program)
+- [Final Notes](#final-notes)
 
 ## Overview
 
 This project models a network of satellites as a **binary tree**, where satellites are interconnected through direct communication links.
 A **root satellite**, positioned closest to Earth’s atmosphere, serves as the communication hub for all other satellites in the network.
-The network supports basic and simplified operations, such as printing the layout of the binary tree level by level, identifying transmission
-sources based on encoded sequences and finding the closest satellite to two or more other satellites. The network also features an extension
-of the initial model: a **multi tree** root can be attached to any initial node from the initial binary tree and the distance between any two
-nodes can be calculated by the program.
+The network supports basic and simplified operations, such as printing the layout of the binary tree level by level, identifying transmission sources based on encoded sequences and finding the closest satellite to two or more other satellites. The network also features an extension of the initial model: a **multi tree** root can be attached to any initial node from the initial binary tree and the distance between any two nodes can be calculated by the program.
 
 ### Communication Frequency & Positioning
 
@@ -39,9 +39,19 @@ To build the tree, the following process is applied iteratively:
 
 ## Network Base Input and Output
 
-Each task that the program can perform first requires providing the necessary data to build the binary tree as described in the above section.
-This information is found at the beginning of a file named `tema2.in` found in the working directory. Any input required by the tasks will be 
-added after these essential lines. The format is as follows:
+Running the program requires three command line arguments to be passed to the binary file:
+
+1. `-c<x>`, where `<x>` is a number between 1 and 5 which represents the task that will be completed
+2. `input_file_name`
+3. `output_file_name`
+
+For ease and consistency with the Makefile included in the project, the two files will be located in the working
+directory and will have specific names.
+
+### Input File: `tema2.in`
+
+Each task that the program can perform first requires providing the necessary data to build the binary tree as described in the previous section. This information must be found at the beginning of a file named `tema2.in` found in the working directory.
+Any input required by the tasks will be added after these essential lines. The format is as follows:
 
 1. **First line:**
    An integer `N` representing the number of primary satellites in the network
@@ -49,7 +59,16 @@ added after these essential lines. The format is as follows:
    Separated by exactly one space, the reporting frequency and name of the satellites
    > Important: The name of each primary satellite cannot exceed 16 characters
 
+### Output File: `tema2.out`
+
 Similarly, the working directory must also contain a file named `tema2.out` to be used for the program's output.
+This file will only contain the output of the requested operation, not errors.
+
+### Error Handling
+
+Any attempt to run the program with less than three arguments or invalid file names will exit the process with code 1
+and print a proper message to stdout (not the output file). Certain operations that may not work properly with wrong input
+will check the results of auxiliary functions before advancing.
 
 ## Base Tasks
 
@@ -133,15 +152,26 @@ Required input for this operation (appended to the `tema2.in` file):
    An integer `T` representing the number of multi trees that will be attached
 2. **First 2 added lines for every multi tree:**
    The name of the satellite from the initial tree that will connect to the multi tree
-   The report frequency and the name of the multi tree root, separated by one space
+   The reporting frequency and the name of the multi tree root, separated by one space
 3. **Next added line:**
    An integer `P` representing the number of parent nodes in the multi tree
 4. **First added line for every parent:**
-   The report frequency and the name of the parent node, separated by one space
+   The reporting frequency and the name of the parent node, separated by one space
 5. **Next added line:**
    An integer `C` representing the number of children that the parent has
 6. **Next C added lines:**
-   The report frequency and name of every child, separated by one space
+   The reporting frequency and name of every child, separated by one space
 7. **Final added line:**
    The names of the two satellites the distance of which must be determined within the extended network
 
+## Running the Program
+
+- A simple Makefile is provided, containing the `build` and `clean` rules, alongside the 5 variations of the `run` rule
+- Ensure that the working directory has two files named `tema2.in` and `tema2.out`
+- The file `tema2.in` should contain the right input for the task that needs to be completed
+- From the terminal, use the command `make run<x>`, where you replace `<x>` with the number of the desired task
+- Inspect the output in `tema2.out`
+
+## Final Notes
+
+- For memory safety, the program has been analysed using Valgrind, fixing all occuring errors
